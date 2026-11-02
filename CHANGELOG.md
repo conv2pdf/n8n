@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1 (2026-11-02)
+
+- The repository moved to the conv2pdf organization: [github.com/conv2pdf/n8n](https://github.com/conv2pdf/n8n). The package, the credential and the node link there for their documentation; the old address redirects.
+
 ## 1.1.0 (2026-10-26)
 
 The node now covers all 19 tools of the conv2pdf API.
