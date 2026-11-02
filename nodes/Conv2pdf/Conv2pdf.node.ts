@@ -87,7 +87,7 @@ function toolFields(this: IExecuteFunctions, operation: string, itemIndex: numbe
 }
 
 /**
- * Sends the files to conv2pdf, downloads the result and, unless told otherwise, deletes it
+ * Sends the files to Conv2pdf, downloads the result and, unless told otherwise, deletes it
  * from the server. Returns the output item without its pairedItem.
  */
 async function convert(
@@ -121,7 +121,7 @@ async function convert(
 	if (download.statusCode !== 200) throw apiError.call(this, download, itemIndex);
 
 	if (options.deleteAfterDownload !== false) {
-		// Best effort: conv2pdf deletes the file after one hour anyway.
+		// Best effort: Conv2pdf deletes the file after one hour anyway.
 		await conv2pdfRequest.call(this, { method: 'DELETE', url: `/job/${jobId}` });
 	}
 
@@ -141,16 +141,16 @@ async function convert(
 
 export class Conv2pdf implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'conv2pdf',
+		displayName: 'Conv2pdf',
 		name: 'conv2pdf',
 		icon: { light: 'file:conv2pdf.svg', dark: 'file:conv2pdf.dark.svg' },
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description:
-			'Convert and edit PDFs with the conv2pdf API: Office documents, images, e-books, PostScript, HTML files and web pages to PDF, PDF to Word, merge, split, compress and more',
+			'Convert and edit PDFs with the Conv2pdf API: Office documents, images, e-books, PostScript, HTML files and web pages to PDF, PDF to Word, merge, split, compress and more',
 		defaults: {
-			name: 'conv2pdf',
+			name: 'Conv2pdf',
 		},
 		usableAsTool: true,
 		inputs: [NodeConnectionTypes.Main],

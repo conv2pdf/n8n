@@ -73,41 +73,41 @@ function retryAfterMs(response: FullResponse): number {
 }
 
 const MESSAGES: Record<string, [message: string, description?: string]> = {
-	missing_bearer_token: ['Missing conv2pdf API key'],
+	missing_bearer_token: ['Missing Conv2pdf API key'],
 	invalid_api_key: [
-		'Invalid conv2pdf API key',
-		'Check the API key in the conv2pdf credential. You can create a new one in the Developer tab of your conv2pdf dashboard.',
+		'Invalid Conv2pdf API key',
+		'Check the API key in the Conv2pdf credential. You can create a new one in the Developer tab of your Conv2pdf dashboard.',
 	],
-	account_not_provisioned: ['This API key has no conv2pdf API account'],
+	account_not_provisioned: ['This API key has no Conv2pdf API account'],
 	quota_exceeded: [
-		'The conv2pdf quota of this API key is used up',
+		'The Conv2pdf quota of this API key is used up',
 		`Paid plans renew their quota every month, the Dev trial does not. Plans: ${PRICING_URL}`,
 	],
 	credits_expired: [
-		'The conv2pdf trial credits have expired',
+		'The Conv2pdf trial credits have expired',
 		`Choose a plan to keep converting: ${PRICING_URL}`,
 	],
 	rate_limited: [
-		'conv2pdf rate limit reached',
+		'Conv2pdf rate limit reached',
 		'The API accepts 20 conversions per minute per API key. The node waited and retried several times: another workflow may be using the same key.',
 	],
 	server_busy: [
-		'conv2pdf is busy',
+		'Conv2pdf is busy',
 		'The node waited and retried several times. Try again in a minute.',
 	],
 	file_too_large: [
-		'The file is larger than your conv2pdf plan allows',
+		'The file is larger than your Conv2pdf plan allows',
 		`The Dev plan accepts 10 MB per file, paid plans 200 MB: ${PRICING_URL}`,
 	],
 	plan_limit_files: [
-		'Your conv2pdf plan does not allow that many files in one request',
+		'Your Conv2pdf plan does not allow that many files in one request',
 		`The Dev plan merges 2 files at a time, paid plans up to 20: ${PRICING_URL}`,
 	],
 	not_enough_files: ['This operation needs more files', 'Merging needs at least 2 PDFs.'],
 	too_many_files: ['This operation received too many files', 'Merging accepts up to 20 PDFs.'],
 	unsupported_content: [
 		'The file does not match this operation',
-		'conv2pdf checks the content of the file, not its name: make sure the input binary field holds the expected type of file.',
+		'Conv2pdf checks the content of the file, not its name: make sure the input binary field holds the expected type of file.',
 	],
 	empty_file: ['The file is empty'],
 	password_protected: [
@@ -133,7 +133,7 @@ const MESSAGES: Record<string, [message: string, description?: string]> = {
 		'This e-book cannot be converted',
 		'Its pages are full-screen images (comics, picture books, manga), and their layout does not survive the conversion to PDF.',
 	],
-	epub_too_long: ['The e-book is too long', 'conv2pdf converts up to 1,500 pages at once.'],
+	epub_too_long: ['The e-book is too long', 'Conv2pdf converts up to 1,500 pages at once.'],
 	invalid_page_range: [
 		'Invalid page range',
 		'Use page numbers and ranges, for example 1-5,7,10-12.',
@@ -155,11 +155,11 @@ const MESSAGES: Record<string, [message: string, description?: string]> = {
 	],
 	url_http_error: [
 		'The web page answered with an error',
-		'Check that the address opens in a browser without signing in: conv2pdf opens the page without a session.',
+		'Check that the address opens in a browser without signing in: Conv2pdf opens the page without a session.',
 	],
 	url_blocked: [
 		'The web page leads to a private network address',
-		'conv2pdf only opens public web pages: the page, or one of its redirects, points to a private or local network.',
+		'Conv2pdf only opens public web pages: the page, or one of its redirects, points to a private or local network.',
 	],
 	url_blank_page: [
 		'The web page prints as a blank page',
@@ -167,16 +167,16 @@ const MESSAGES: Record<string, [message: string, description?: string]> = {
 	],
 	no_file_expected: ['Convert URL to PDF takes a web page address, not a file'],
 	field_required: ['A required field is missing'],
-	source_unreadable: ['conv2pdf could not read this file', 'The file may be damaged or truncated.'],
+	source_unreadable: ['Conv2pdf could not read this file', 'The file may be damaged or truncated.'],
 	tool_not_found: [
-		'This conv2pdf operation is not available',
-		'The conv2pdf API does not offer this tool yet. Check the node version against the conv2pdf API documentation.',
+		'This Conv2pdf operation is not available',
+		'The Conv2pdf API does not offer this tool yet. Check the node version against the Conv2pdf API documentation.',
 	],
 	job_not_found: ['The conversion was not found'],
 	job_not_ready: ['The converted file is not ready'],
 	output_too_large: ['The result is too large to be delivered'],
 	conversion_failed: [
-		'conv2pdf could not complete this conversion',
+		'Conv2pdf could not complete this conversion',
 		'Failed conversions do not count against your quota.',
 	],
 	conversion_timeout: [
@@ -187,14 +187,14 @@ const MESSAGES: Record<string, [message: string, description?: string]> = {
 	job_deleted: ['The conversion was deleted'],
 };
 
-// What conv2pdf found in a file that does not match the operation (`detected_type`).
+// What Conv2pdf found in a file that does not match the operation (`detected_type`).
 const CONTENT_HINTS: Record<string, string> = {
 	epub: 'This file is an EPUB e-book: use the E-Book > Convert to PDF operation.',
 	iwork_numbers:
-		'This file is a Numbers spreadsheet, which conv2pdf does not convert. Open it in Numbers and choose File > Export To > PDF.',
+		'This file is a Numbers spreadsheet, which Conv2pdf does not convert. Open it in Numbers and choose File > Export To > PDF.',
 	iwork_keynote:
-		'This file is a Keynote presentation, which conv2pdf does not convert. Open it in Keynote and choose File > Export To > PDF.',
-	iwork: 'conv2pdf converts Apple Pages documents only, named with their .pages extension.',
+		'This file is a Keynote presentation, which Conv2pdf does not convert. Open it in Keynote and choose File > Export To > PDF.',
+	iwork: 'Conv2pdf converts Apple Pages documents only, named with their .pages extension.',
 	postscript: 'This file is PostScript or EPS: use the Document > Convert PostScript to PDF operation.',
 	html: 'This file is an HTML page: use the Web Page > Convert HTML File to PDF operation.',
 	pdf: 'This file is already a PDF: use one of the PDF operations.',
@@ -205,9 +205,9 @@ const URL_CAUSES: Record<string, string> = {
 	malformed: 'Write the full address, starting with https:// or http://.',
 	scheme: 'Only http and https addresses can be converted.',
 	credentials:
-		'Remove the user name and password from the address: conv2pdf opens the page without signing in.',
-	private_address: 'conv2pdf only opens public web pages, not addresses of a private or local network.',
-	local_name: 'conv2pdf only opens public web pages, not names of a local network.',
+		'Remove the user name and password from the address: Conv2pdf opens the page without signing in.',
+	private_address: 'Conv2pdf only opens public web pages, not addresses of a private or local network.',
+	local_name: 'Conv2pdf only opens public web pages, not names of a local network.',
 	too_long: 'The address is too long.',
 };
 
@@ -243,7 +243,7 @@ export function apiError(
 	const body = jsonBody(response);
 	const code = errorCode(response);
 	const [message, generalDescription] = (code && MESSAGES[code]) || [
-		code ? `conv2pdf error: ${code}` : `conv2pdf returned HTTP ${response.statusCode}`,
+		code ? `Conv2pdf error: ${code}` : `Conv2pdf returned HTTP ${response.statusCode}`,
 	];
 	const detected = String(body.detected_type);
 	const description =

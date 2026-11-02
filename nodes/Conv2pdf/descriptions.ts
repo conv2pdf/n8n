@@ -3,7 +3,7 @@ import type { INodeProperties } from 'n8n-workflow';
 export type FileResource = 'document' | 'ebook' | 'image' | 'pdf' | 'webPage';
 
 export interface OperationSpec {
-	/** The conv2pdf tool behind the operation: the `:tool` of POST /v1/convert/:tool. */
+	/** The Conv2pdf tool behind the operation: the `:tool` of POST /v1/convert/:tool. */
 	tool: string;
 	name: string;
 	action: string;
@@ -12,7 +12,7 @@ export interface OperationSpec {
 	noFile?: boolean;
 }
 
-// One operation per conv2pdf tool, so each one shows up as its own action in the
+// One operation per Conv2pdf tool, so each one shows up as its own action in the
 // nodes panel and in the AI Agent tool list.
 export const OPERATIONS: Record<FileResource, Record<string, OperationSpec>> = {
 	document: {
@@ -482,7 +482,7 @@ export const properties: INodeProperties[] = [
 				type: 'boolean',
 				default: true,
 				description:
-					'Whether to delete the job and its file from conv2pdf once the node has downloaded the result. Otherwise conv2pdf deletes them after one hour.',
+					'Whether to delete the job and its file from Conv2pdf once the node has downloaded the result. Otherwise Conv2pdf deletes them after one hour.',
 			},
 			{
 				displayName: 'PDF Password',

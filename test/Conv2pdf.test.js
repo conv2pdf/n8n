@@ -31,7 +31,7 @@ function file(body, name, type) {
 	});
 }
 
-// A conv2pdf double: every conversion succeeds, downloads return the file, deletes return 200.
+// A Conv2pdf double: every conversion succeeds, downloads return the file, deletes return 200.
 function api(overrides = {}) {
 	let jobs = 0;
 	return (options) => {
@@ -142,7 +142,7 @@ test('sends the fields of the operation', async () => {
 	assert.equal(form.get('prevent_copy'), null);
 });
 
-test('maps each operation to its conv2pdf tool and fields', async () => {
+test('maps each operation to its Conv2pdf tool and fields', async () => {
 	const cases = [
 		[{ resource: 'pdf', operation: 'extractPages', ranges: '1-3,7' }, 'extract-pages', { ranges: '1-3,7' }],
 		[{ resource: 'pdf', operation: 'split' }, 'split-pdf', {}],
@@ -246,14 +246,14 @@ test('merges several binary fields of the same item', async () => {
 });
 
 test('waits for Retry-After on a rate limit, then retries', async () => {
-	const conv2pdf = api();
+	const Conv2pdf = api();
 	const started = Date.now();
 	const { promise, calls } = run({
 		parameters: { resource: 'document', operation: 'convertToPdf', binaryPropertyName: 'data' },
 		respond: (options, n) =>
 			n === 1
 				? json(429, { error: 'rate_limited', retry_after: 1, limit: 20 }, { 'retry-after': '1' })
-				: conv2pdf(options),
+				: Conv2pdf(options),
 	});
 	const [item] = await promise;
 
@@ -274,7 +274,7 @@ test('stops at a spent quota instead of retrying', async () => {
 	assert.equal(calls.length, 1);
 	assert.equal(output.length, 3);
 	for (const item of output) {
-		assert.equal(item.json.error, 'The conv2pdf quota of this API key is used up');
+		assert.equal(item.json.error, 'The Conv2pdf quota of this API key is used up');
 	}
 });
 
@@ -285,20 +285,20 @@ test('fails the node with a clear message when the API key is rejected', async (
 	});
 
 	await assert.rejects(promise, (error) => {
-		assert.equal(error.message, 'Invalid conv2pdf API key');
+		assert.equal(error.message, 'Invalid Conv2pdf API key');
 		assert.equal(error.httpCode, '401');
 		return true;
 	});
 });
 
 test('a file error only fails its own item', async () => {
-	const conv2pdf = api();
+	const Conv2pdf = api();
 	const { promise } = run({
 		files: [['locked.pdf'], ['open.pdf']],
 		continueOnFail: true,
 		parameters: { resource: 'pdf', operation: 'compress', binaryPropertyName: 'data', quality: 'medium' },
 		respond: (options, n) =>
-			n === 1 ? json(422, { error: 'needs_password', plan: 'starter' }) : conv2pdf(options),
+			n === 1 ? json(422, { error: 'needs_password', plan: 'starter' }) : Conv2pdf(options),
 	});
 	const output = await promise;
 
@@ -341,7 +341,7 @@ test('offers the PDF password only on the operations whose tool opens a protecte
 	]);
 });
 
-test('explains a Numbers file, which conv2pdf does not convert', async () => {
+test('explains a Numbers file, which Conv2pdf does not convert', async () => {
 	const { promise } = run({
 		files: [['budget.numbers']],
 		parameters: { resource: 'document', operation: 'convertToPdf', binaryPropertyName: 'data' },
@@ -414,7 +414,7 @@ test('names the node by its full identifier in the codex file', () => {
 
 // The 19 tools of POST /v1/convert/:tool on 26/10/2026: a tool added to the API and
 // forgotten here would only show up as a missing action in n8n.
-test('has an operation for every tool of the conv2pdf API', () => {
+test('has an operation for every tool of the Conv2pdf API', () => {
 	const tools = Object.values(OPERATIONS).flatMap((operations) =>
 		Object.values(operations).map((spec) => spec.tool),
 	);
@@ -443,12 +443,12 @@ test('converts a web page from its address, without sending a file', async () =>
 });
 
 test('returns the ZIP archive of a split as it is', async () => {
-	const conv2pdf = api();
+	const Conv2pdf = api();
 	const { promise } = run({
 		files: [['book.pdf']],
 		parameters: { resource: 'pdf', operation: 'split', binaryPropertyName: 'data' },
 		respond: (options) =>
-			options.method === 'GET' ? file('PK', 'book-pages.zip', 'application/zip') : conv2pdf(options),
+			options.method === 'GET' ? file('PK', 'book-pages.zip', 'application/zip') : Conv2pdf(options),
 	});
 	const [item] = await promise;
 
