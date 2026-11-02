@@ -16,7 +16,7 @@ export class Conv2pdfApi implements ICredentialType {
 		dark: 'file:../nodes/Conv2pdf/conv2pdf.dark.svg',
 	};
 
-	documentationUrl = 'https://github.com/jamalofski/n8n-nodes-conv2pdf#credentials';
+	documentationUrl = 'https://github.com/conv2pdf/n8n#credentials';
 
 	properties: INodeProperties[] = [
 		{

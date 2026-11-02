@@ -76,7 +76,7 @@ Built and tested against `n8n-workflow` 2.40.
 
 ## Support
 
-Open an [issue](https://github.com/jamalofski/n8n-nodes-conv2pdf/issues) or write to contact@conv2pdf.com.
+Open an [issue](https://github.com/conv2pdf/n8n/issues) or write to contact@conv2pdf.com.
 
 ## License
 

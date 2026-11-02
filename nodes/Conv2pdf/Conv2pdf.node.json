@@ -26,12 +26,12 @@
 	"resources": {
 		"credentialDocumentation": [
 			{
-				"url": "https://github.com/jamalofski/n8n-nodes-conv2pdf#credentials"
+				"url": "https://github.com/conv2pdf/n8n#credentials"
 			}
 		],
 		"primaryDocumentation": [
 			{
-				"url": "https://github.com/jamalofski/n8n-nodes-conv2pdf#readme"
+				"url": "https://github.com/conv2pdf/n8n#readme"
 			}
 		]
 	}
