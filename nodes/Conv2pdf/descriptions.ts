@@ -29,6 +29,13 @@ export const OPERATIONS: Record<FileResource, Record<string, OperationSpec>> = {
 			description:
 				'Convert a PostScript (.ps) or EPS file to PDF, keeping its text as text and its drawings as vectors',
 		},
+		xpsToPdf: {
+			tool: 'xps-to-pdf',
+			name: 'Convert XPS to PDF',
+			action: 'Convert an XPS or OXPS document to PDF',
+			description:
+				'Convert an XPS (.xps) or OpenXPS (.oxps) document to PDF, each page at its own size, with its text and links',
+		},
 	},
 	ebook: {
 		convertToPdf: {

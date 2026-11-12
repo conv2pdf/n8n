@@ -148,7 +148,7 @@ export class Conv2pdf implements INodeType {
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description:
-			'Convert and edit PDFs with the Conv2pdf API: Office documents, images, e-books, PostScript, HTML files and web pages to PDF, PDF to Word, merge, split, compress and more',
+			'Convert and edit PDFs with the Conv2pdf API: Office documents, images, e-books, PostScript, XPS, HTML files and web pages to PDF, PDF to Word, merge, split, compress and more',
 		defaults: {
 			name: 'Conv2pdf',
 		},

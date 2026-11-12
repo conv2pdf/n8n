@@ -1,6 +1,6 @@
 # n8n-nodes-conv2pdf
 
-Official [n8n](https://n8n.io) node for the [Conv2pdf API](https://conv2pdf.com/en/api/): convert Word, Excel, PowerPoint, Pages, images, e-books, PostScript, HTML files and web pages to PDF, convert PDF to Word, and merge, split, compress, protect, rotate or number PDFs, straight from your workflows. Processing runs on OVHcloud servers in France: no transfer outside the EU, no US service in the chain.
+Official [n8n](https://n8n.io) node for the [Conv2pdf API](https://conv2pdf.com/en/api/): convert Word, Excel, PowerPoint, Pages, images, e-books, PostScript, XPS, HTML files and web pages to PDF, convert PDF to Word, and merge, split, compress, protect, rotate or number PDFs, straight from your workflows. Processing runs on OVHcloud servers in France: no transfer outside the EU, no US service in the chain.
 
 [Installation](#installation) · [Operations](#operations) · [Credentials](#credentials) · [Usage](#usage) · [Output](#output) · [Compatibility](#compatibility) · [Resources](#resources)
 
@@ -14,6 +14,7 @@ Follow the [community nodes installation guide](https://docs.n8n.io/integrations
 |---|---|---|
 | Document | Convert Office Document to PDF | Word, Excel, PowerPoint, OpenDocument or Apple Pages file to PDF |
 | Document | Convert PostScript to PDF | PostScript (`.ps`) or EPS file to PDF, text kept as text and drawings as vectors |
+| Document | Convert XPS to PDF | XPS (`.xps`) or OpenXPS (`.oxps`) document to PDF, each page at its own size |
 | E-Book | Convert to PDF | EPUB e-book to PDF on A4 pages, with its table of contents and links |
 | Image | Convert to PDF | PNG, JPG, WebP, GIF or TIFF image to PDF |
 | Image | Convert HEIC to JPG | iPhone HEIC or HEIF photo to JPG |

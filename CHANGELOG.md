@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0 (2026-11-12)
+
+- **Document > Convert XPS to PDF** converts an XPS (`.xps`) or OpenXPS (`.oxps`) document, such as a file printed with Microsoft XPS Document Writer, to PDF. Each page keeps its own size, with its text and links.
+- A file that holds an XPS document, given to another operation, gets a message that names the Convert XPS to PDF operation.
+- A document with too many pages gets a description with its page count and the limit of the operation.
+
 ## 1.1.1 (2026-11-02)
 
 - The repository moved to the conv2pdf organization: [github.com/conv2pdf/n8n](https://github.com/conv2pdf/n8n). The package, the credential and the node link there for their documentation; the old address redirects.

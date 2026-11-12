@@ -196,6 +196,7 @@ const CONTENT_HINTS: Record<string, string> = {
 		'This file is a Keynote presentation, which Conv2pdf does not convert. Open it in Keynote and choose File > Export To > PDF.',
 	iwork: 'Conv2pdf converts Apple Pages documents only, named with their .pages extension.',
 	postscript: 'This file is PostScript or EPS: use the Document > Convert PostScript to PDF operation.',
+	xps: 'This file is an XPS document: use the Document > Convert XPS to PDF operation.',
 	html: 'This file is an HTML page: use the Web Page > Convert HTML File to PDF operation.',
 	pdf: 'This file is already a PDF: use one of the PDF operations.',
 };
@@ -211,12 +212,17 @@ const URL_CAUSES: Record<string, string> = {
 	too_long: 'The address is too long.',
 };
 
-/** The description of a page range or address refusal, from the `cause` the API returns. */
+/** The description of a page range, address or page count refusal, from the details the API returns. */
 function causeDescription(code: string | undefined, body: IDataObject): string | undefined {
 	const cause = String(body.cause);
 	if (code === 'invalid_url') return URL_CAUSES[cause];
 	if (code === 'url_http_error' && Number.isInteger(Number(body.http_status))) {
 		return `The page answered HTTP ${Number(body.http_status)}. ${MESSAGES.url_http_error[1]}`;
+	}
+	if (code === 'too_many_pages' && Number.isInteger(Number(body.max_pages))) {
+		const pages = Number.isInteger(Number(body.pages)) ? `The document has ${Number(body.pages).toLocaleString('en-US')} pages; ` : '';
+		const limit = `this operation accepts up to ${Number(body.max_pages).toLocaleString('en-US')}.`;
+		return pages ? `${pages}${limit}` : limit.charAt(0).toUpperCase() + limit.slice(1);
 	}
 	if (code !== 'invalid_page_range') return undefined;
 	const range = typeof body.range === 'string' && body.range !== '' ? `"${body.range}": ` : '';
