@@ -181,6 +181,7 @@ test('maps each operation to its Conv2pdf tool and fields', async () => {
 		[{ resource: 'ebook', operation: 'convertToPdf' }, 'epub-to-pdf', {}],
 		[{ resource: 'document', operation: 'postscriptToPdf' }, 'ps-to-pdf', {}],
 		[{ resource: 'document', operation: 'xpsToPdf' }, 'xps-to-pdf', {}],
+		[{ resource: 'document', operation: 'markdownToPdf' }, 'markdown-to-pdf', {}],
 		[{ resource: 'webPage', operation: 'convertHtmlToPdf' }, 'html-to-pdf', {}],
 		[{ resource: 'image', operation: 'convertToPdf' }, 'image-to-pdf', {}],
 		[{ resource: 'image', operation: 'heicToJpg' }, 'heic-to-jpg', {}],
@@ -413,7 +414,7 @@ test('names the node by its full identifier in the codex file', () => {
 	assert.equal(codex.node, NODE.type);
 });
 
-// The 20 tools of POST /v1/convert/:tool on 12/11/2026: a tool added to the API and
+// The 21 tools of POST /v1/convert/:tool on 18/11/2026: a tool added to the API and
 // forgotten here would only show up as a missing action in n8n.
 test('has an operation for every tool of the Conv2pdf API', () => {
 	const tools = Object.values(OPERATIONS).flatMap((operations) =>
@@ -421,7 +422,7 @@ test('has an operation for every tool of the Conv2pdf API', () => {
 	);
 	assert.deepEqual([...tools].sort(), [
 		'compress-pdf', 'epub-to-pdf', 'extract-pages', 'heic-to-jpg', 'heic-to-pdf',
-		'html-to-pdf', 'image-to-pdf', 'merge-pdf', 'office-to-pdf', 'page-numbers-pdf',
+		'html-to-pdf', 'image-to-pdf', 'markdown-to-pdf', 'merge-pdf', 'office-to-pdf', 'page-numbers-pdf',
 		'pdf-to-image', 'pdf-to-word', 'protect-pdf', 'ps-to-pdf', 'rotate-pdf',
 		'split-pdf', 'unlock-pdf', 'url-to-pdf', 'watermark-pdf', 'xps-to-pdf',
 	]);
@@ -488,6 +489,24 @@ test('explains why an address or a page range was refused', async () => {
 			json(415, { error: 'unsupported_content', detected_type: 'xps' }),
 			'The file does not match this operation',
 			/Document > Convert XPS to PDF/,
+		],
+		[
+			{ resource: 'pdf', operation: 'compress', binaryPropertyName: 'data' },
+			json(415, { error: 'unsupported_content', detected_type: 'markdown' }),
+			'The file does not match this operation',
+			/Document > Convert Markdown to PDF/,
+		],
+		[
+			{ resource: 'document', operation: 'markdownToPdf', binaryPropertyName: 'data' },
+			json(415, { error: 'unsupported_content', detected_type: 'text_encoding' }),
+			'The file does not match this operation',
+			/not saved as UTF-8/,
+		],
+		[
+			{ resource: 'document', operation: 'markdownToPdf', binaryPropertyName: 'data' },
+			json(422, { error: 'markdown_blank_output' }),
+			'This Markdown file has nothing to lay out',
+			/empty, or holds only its front matter/,
 		],
 		[
 			{ resource: 'document', operation: 'xpsToPdf', binaryPropertyName: 'data' },

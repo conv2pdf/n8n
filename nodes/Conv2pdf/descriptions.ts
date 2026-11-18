@@ -36,6 +36,13 @@ export const OPERATIONS: Record<FileResource, Record<string, OperationSpec>> = {
 			description:
 				'Convert an XPS (.xps) or OpenXPS (.oxps) document to PDF, each page at its own size, with its text and links',
 		},
+		markdownToPdf: {
+			tool: 'markdown-to-pdf',
+			name: 'Convert Markdown to PDF',
+			action: 'Convert a Markdown file to PDF',
+			description:
+				'Convert a Markdown (.md) file to PDF, laid out as GitHub shows it, with its tables, highlighted code and math. The text must be UTF-8',
+		},
 	},
 	ebook: {
 		convertToPdf: {

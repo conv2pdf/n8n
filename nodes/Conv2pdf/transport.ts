@@ -144,6 +144,10 @@ const MESSAGES: Record<string, [message: string, description?: string]> = {
 		'This PostScript file draws no page',
 		'A file that only holds a font or a library of procedures, or whose program fails, produces no page.',
 	],
+	markdown_blank_output: [
+		'This Markdown file has nothing to lay out',
+		'The file is empty, or holds only its front matter.',
+	],
 	html_blank_output: [
 		'This HTML file prints as a blank page',
 		'Nothing in it is drawn when printed: the file may be empty, or hide its content for printing.',
@@ -197,6 +201,9 @@ const CONTENT_HINTS: Record<string, string> = {
 	iwork: 'Conv2pdf converts Apple Pages documents only, named with their .pages extension.',
 	postscript: 'This file is PostScript or EPS: use the Document > Convert PostScript to PDF operation.',
 	xps: 'This file is an XPS document: use the Document > Convert XPS to PDF operation.',
+	markdown: 'This file is a Markdown document: use the Document > Convert Markdown to PDF operation.',
+	text_encoding:
+		'This Markdown file is not saved as UTF-8, and its accented characters would come out garbled. Save it as UTF-8 and try again.',
 	html: 'This file is an HTML page: use the Web Page > Convert HTML File to PDF operation.',
 	pdf: 'This file is already a PDF: use one of the PDF operations.',
 };
