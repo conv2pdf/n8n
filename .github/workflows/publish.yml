@@ -6,6 +6,8 @@
 #
 # To release, run `npm run release` locally. It lints, builds, bumps the version,
 # updates the changelog, commits, tags and pushes; the tag push triggers this workflow.
+# Once npm has the package, the release job creates the tag's GitHub release from the
+# version's section of CHANGELOG.md, unless `npm run release` made it already.
 
 name: Publish
 
@@ -81,3 +83,43 @@ jobs:
       # Lints, builds, then runs `npm publish` with a provenance statement.
       - name: Release
         run: npm run release
+
+  # Runs once npm has the package, so that a release never announces a version npm
+  # does not serve. The notes are the tag's section of CHANGELOG.md, word for word.
+  release:
+    name: GitHub release
+    needs: publish
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    permissions:
+      # Creates the release of the tag; nothing else in this job writes.
+      contents: write
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Create the release from the CHANGELOG section
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            echo "The release $TAG exists already: nothing to do."
+            exit 0
+          fi
+          # The section under "## <tag> (<date>)", without the blank lines around it.
+          awk -v v="$TAG" 'index($0, "## " v " ") == 1 {f=1; next} /^## / && f {exit} f {l[++n]=$0}
+            END {s=1; while (s<=n && l[s]=="") s++; e=n; while (e>=s && l[e]=="") e--; for (i=s; i<=e; i++) print l[i]}' \
+            CHANGELOG.md > notes.md
+          if [ ! -s notes.md ]; then
+            echo "::error::CHANGELOG.md has no section for $TAG"
+            exit 1
+          fi
+          flag=''
+          case "$TAG" in *-*) flag='--prerelease' ;; esac
+          gh release create "$TAG" --verify-tag --title "$TAG" --notes-file notes.md ${flag:+"$flag"}
